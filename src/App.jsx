@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import "./App.css";
 import "./Theme.css";
+import { Link } from "react-router-dom";
 
 const initialData = {
   name: "loaiyehia",
@@ -32,6 +33,9 @@ function App() {
 
   return (
     <div className={`App ${allData.theme}`}>
+
+<Link to="/page2" className="page2">Go To Page2</Link>
+
       <button
         onClick={() => {
           disPatch(
@@ -126,8 +130,7 @@ function App() {
       </button>
       <br />
       <br />
-      <br />
-      <br />
+
       <button
         onClick={() => {
           disPatch({ type: "CHANGE_COUNT", newValue: allData.count + 1 });
