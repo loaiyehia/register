@@ -1,48 +1,21 @@
-import { useReducer } from "react";
 import "./App.css";
 import "./Theme.css";
 import { Link } from "react-router-dom";
-
-const initialData = {
-  name: "loaiyehia",
-  age: 33,
-  count: 0,
-  theme: "",
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "CHANGE_NAME":
-      return { ...state, name: action.newValue };
-
-    case "CHANGE_AGE":
-      return { ...state, age: action.newValue };
-    case "CHANGE_COUNT":
-      return { ...state, count: action.newValue };
-
-    case "CHANGE_THEME":
-      return { ...state, theme: action.newValue };
-
-    default:
-      return state;
-  }
-};
+import { useContext } from "react";
+import ThemeContexttt from "./Context/DataContext";
 
 function App() {
-  const [allData, disPatch] = useReducer(reducer, initialData);
+  const ctx = useContext(ThemeContexttt);
 
   return (
-    <div className={`App ${allData.theme}`}>
-
-<Link to="/page2" className="page2">Go To Page2</Link>
+    <div className={`App ${ctx.theme} `}>
+      <Link to="/page2" className="page2">
+        Go To Page2
+      </Link>
 
       <button
         onClick={() => {
-          disPatch(
-            allData.theme == ""
-              ? { type: "CHANGE_THEME", newValue: "dark" }
-              : { type: "CHANGE_THEME", newValue: "" }
-          );
+          ctx.ToggleTheme(ctx.theme === "" ? "dark" : "");
         }}
         style={{ marginBottom: "45px" }}
       >
@@ -51,11 +24,7 @@ function App() {
 
       <div
         onChange={() => {
-          disPatch(
-            allData.theme == ""
-              ? { type: "CHANGE_THEME", newValue: "dark" }
-              : { type: "CHANGE_THEME", newValue: "" }
-          );
+          ctx.ToggleTheme(ctx.theme === "" ? "dark" : "");
         }}
         style={{ marginBottom: "45px" }}
         className="btn-container"
@@ -81,7 +50,7 @@ function App() {
       <div>
         <button
           onClick={() => {
-            disPatch({ type: "CHANGE_THEME", newValue: "" });
+            ctx.ToggleTheme("");
           }}
           style={{ marginRight: "26px" }}
         >
@@ -89,7 +58,7 @@ function App() {
         </button>
         <button
           onClick={() => {
-            disPatch({ type: "CHANGE_THEME", newValue: "dark" });
+            ctx.ToggleTheme("dark");
           }}
           style={{ marginRight: "26px" }}
         >
@@ -97,7 +66,7 @@ function App() {
         </button>
         <button
           onClick={() => {
-            disPatch({ type: "CHANGE_THEME", newValue: "grey" });
+            ctx.ToggleTheme("grey");
           }}
           style={{ marginRight: "26px" }}
         >
@@ -105,38 +74,36 @@ function App() {
         </button>
         <button
           onClick={() => {
-            disPatch({ type: "CHANGE_THEME", newValue: "pink" });
+            ctx.ToggleTheme("pink");
           }}
         >
           Pink
         </button>
       </div>
 
-      <h2 style={{ marginTop: "35px" }}>My Name Is {allData.name} </h2>
+      <h2 style={{ marginTop: "66px" }}>My name is {ctx.name} </h2>
       <button
         onClick={() => {
-          disPatch({ type: "CHANGE_NAME", newValue: "ALLOL" });
+          ctx.changeName("AlLol");
         }}
       >
-        Change Name
+        Change name
       </button>
-      <h2>My Age Is {allData.age}</h2>
+      <h2>My Age Is {ctx.age}</h2>
       <button
         onClick={() => {
-          disPatch({ type: "CHANGE_AGE", newValue: 28 });
+          ctx.changeAge(28);
         }}
       >
-        Change age{" "}
+        Change age
       </button>
       <br />
-      <br />
-
       <button
         onClick={() => {
-          disPatch({ type: "CHANGE_COUNT", newValue: allData.count + 1 });
+          ctx.changeCount(ctx.count + 1);
         }}
       >
-        count is {allData.count}
+        count is {ctx.count}
       </button>
     </div>
   );
